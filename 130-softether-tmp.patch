@@ -1,0 +1,107 @@
+diff -crN a/src/Cedar/Command.c b/src/Cedar/Command.c
+*** a/src/Cedar/Command.c	2014-09-05 21:14:25.000000000 +0400
+--- b/src/Cedar/Command.c	2014-09-07 18:06:40.000000000 +0400
+***************
+*** 552,558 ****
+  		UCHAR *buf;
+  		IO *io;
+  #ifndef	OS_WIN32
+! 		wchar_t *filename = L"/tmp/vpn_checker_tmp";
+  #else	// OS_WIN32
+  		wchar_t filename[MAX_PATH];
+  		CombinePathW(filename, sizeof(filename), MsGetMyTempDirW(), L"vpn_checker_tmp");
+--- 552,558 ----
+  		UCHAR *buf;
+  		IO *io;
+  #ifndef	OS_WIN32
+! 		wchar_t *filename = L"/var/tmp/vpn_checker_tmp";
+  #else	// OS_WIN32
+  		wchar_t filename[MAX_PATH];
+  		CombinePathW(filename, sizeof(filename), MsGetMyTempDirW(), L"vpn_checker_tmp");
+diff -crN a/src/Mayaqua/FileIO.c b/src/Mayaqua/FileIO.c
+*** a/src/Mayaqua/FileIO.c	2014-09-05 21:09:57.000000000 +0400
+--- b/src/Mayaqua/FileIO.c	2014-09-07 18:06:40.000000000 +0400
+***************
+*** 122,129 ****
+  #include <errno.h>
+  #include <Mayaqua/Mayaqua.h>
+  
+! static char exe_file_name[MAX_SIZE] = "/tmp/a.out";
+! static wchar_t exe_file_name_w[MAX_SIZE] = L"/tmp/a.out";
+  static LIST *hamcore = NULL;
+  static IO *hamcore_io = NULL;
+  
+--- 122,129 ----
+  #include <errno.h>
+  #include <Mayaqua/Mayaqua.h>
+  
+! static char exe_file_name[MAX_SIZE] = "/var/tmp/a.out";
+! static wchar_t exe_file_name_w[MAX_SIZE] = L"/var/tmp/a.out";
+  static LIST *hamcore = NULL;
+  static IO *hamcore_io = NULL;
+  
+diff -crN a/src/Mayaqua/Mayaqua.c b/src/Mayaqua/Mayaqua.c
+*** a/src/Mayaqua/Mayaqua.c	2014-09-05 21:13:07.000000000 +0400
+--- b/src/Mayaqua/Mayaqua.c	2014-09-07 18:06:40.000000000 +0400
+***************
+*** 711,721 ****
+  		UINT64 now = SystemTime64();
+  		IO *o;
+  
+! 		MakeDir("/tmp");
+  
+  		Format(tmp2, sizeof(tmp2), "%I64u", now);
+  
+! 		Format(tmp, sizeof(tmp), "/tmp/.%s", tmp2);
+  
+  		o = FileCreate(tmp);
+  		if (o == NULL)
+--- 711,721 ----
+  		UINT64 now = SystemTime64();
+  		IO *o;
+  
+! 		MakeDir("/var/tmp");
+  
+  		Format(tmp2, sizeof(tmp2), "%I64u", now);
+  
+! 		Format(tmp, sizeof(tmp), "/var/tmp/.%s", tmp2);
+  
+  		o = FileCreate(tmp);
+  		if (o == NULL)
+***************
+*** 723,729 ****
+  			o = FileOpen(tmp, false);
+  			if (o == NULL)
+  			{
+! 				Print("Unable to use /tmp.\n\n");
+  				exit(0);
+  				return;
+  			}
+--- 723,729 ----
+  			o = FileOpen(tmp, false);
+  			if (o == NULL)
+  			{
+! 				Print("Unable to use /var/tmp.\n\n");
+  				exit(0);
+  				return;
+  			}
+diff -crN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
+*** a/src/Mayaqua/Table.c	2014-09-05 21:11:16.000000000 +0400
+--- b/src/Mayaqua/Table.c	2014-09-07 18:06:40.000000000 +0400
+***************
+*** 1204,1210 ****
+  	UniStrLower(tmp);
+  
+  #ifndef	OS_WIN32
+! 	UniStrCpy(exe, sizeof(exe), L"/tmp");
+  #else	// OS_WIN32
+  	StrToUni(exe, sizeof(exe), MsGetTempDir());
+  #endif	// OS_WIN32
+--- 1204,1210 ----
+  	UniStrLower(tmp);
+  
+  #ifndef	OS_WIN32
+! 	UniStrCpy(exe, sizeof(exe), L"/var/tmp");
+  #else	// OS_WIN32
+  	StrToUni(exe, sizeof(exe), MsGetTempDir());
+  #endif	// OS_WIN32
