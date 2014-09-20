@@ -19,7 +19,7 @@ MAKE="make -j`nproc`"
 CONFIGURE="./configure --prefix=/target --host=arm-linux"
 mkdir -p $SRC
 
-# ZLIB # 
+# ZLIB #
 
 mkdir $SRC/zlib && cd $SRC/zlib
 $WGET http://zlib.net/zlib-1.2.8.tar.gz
@@ -96,9 +96,9 @@ ln -s libncursesw.so $DEST/lib/libcurses.so
 # LIBREADLINE # 
 
 mkdir $SRC/libreadline && cd $SRC/libreadline
-$WGET ftp://ftp.cwru.edu/pub/bash/readline-6.2.tar.gz
-tar zxvf readline-6.2.tar.gz
-cd readline-6.2
+$WGET ftp://ftp.cwru.edu/pub/bash/readline-6.3.tar.gz
+tar zxvf readline-6.3.tar.gz
+cd readline-6.3
 
 CC=$CC \
 CXX=$CXX \
